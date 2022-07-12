@@ -8,53 +8,45 @@ namespace OOPTask2
         {
             int posotionX = 10;
             int posotionY = 10;
-            Player player = new Player('@');
+            Player player = new Player('@', posotionX, posotionY);
             Renderer renderer = new Renderer();
 
-            renderer.DrawPlayer(player, posotionX, posotionY);
+            renderer.DrawPlayer(player);
         }
     }
 
     class Player
     {
-        public char PlayerSymbol { get; private set; }
-        public int PlayerPositionX { get; private set; }
-        public int PlayerPositionY { get; private set; }
+        public char Symbol { get; private set; }
+        public int PositionX { get; private set; }
+        public int PositionY { get; private set; }
 
-        public Player(char playerSymbol)
+        public Player(char symbol, int positionX, int positionY)
         {
-            PlayerSymbol = playerSymbol;
-            PlayerPositionX = 0;
-            PlayerPositionY = 0;
+            Symbol = symbol;
+            PositionX = positionX;
+            PositionY = positionY;
         }
 
-        public void SetPlayerPosition(int positionX, int positionY)
-        {
-            PlayerPositionX = positionX;
-            PlayerPositionY = positionY;
-        }
     }
 
     class Renderer
     {
-        public Renderer() { }
-
-        public void DrawPlayer(Player player, int positionX, int positionY)
+        public void DrawPlayer(Player player)
         {
-            if (PositionIsCorrect(positionX, positionY) == false)
+            if (CheckPosition(player.PositionX, player.PositionY) == false)
             {
                 return;
             }
 
             var currentConsolePositinon = Console.GetCursorPosition();
 
-            player.SetPlayerPosition(positionX, positionY);
-            Console.SetCursorPosition(player.PlayerPositionX, player.PlayerPositionY);
-            Console.WriteLine(player.PlayerSymbol);
+            Console.SetCursorPosition(player.PositionX, player.PositionY);
+            Console.WriteLine(player.Symbol);
             Console.SetCursorPosition(currentConsolePositinon.Left, currentConsolePositinon.Top);
         }
 
-        private bool PositionIsCorrect(int positionX, int positionY)
+        private bool CheckPosition(int positionX, int positionY)
         {
             int maxPositionX = Console.BufferWidth;
             int maxPositionY = Console.BufferHeight;
